@@ -102,9 +102,6 @@
 		sessionCommands = ''
 			xsetroot -cursor_name left_ptr
 			xrdb -merge ~/.Xresources
-			synclient TapButton1=0
-			synclient TapButton2=0
-			synclient TapButton3=0
 		'';
 	};
 
