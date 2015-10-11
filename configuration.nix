@@ -46,6 +46,7 @@
 		xfontsel
 		git
 		gnumake
+		pciutils
 
 		xlibs.xf86inputsynaptics
 
