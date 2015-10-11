@@ -1,62 +1,64 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+	# Edit this configuration file to define what should be installed on
+	# your system.  Help is available in the configuration.nix(5) man page
+	# and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+	{ config, pkgs, ... }:
 
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-  # TODO
-  #  FONT, SSD Optim
+	{
+	  imports =
+	    [ # Include the results of the hardware scan.
+	      ./hardware-configuration.nix
+	    ];
+	  # TODO
+	  #  FONT, SSD Optim
+	nixpkgs.config.allowUnfree = true;
 
-  # Use the gummiboot efi boot loader.
-  boot.loader.gummiboot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "fbcon"];
-  boot.initrd.luks.devices = [{
-	name = "root"; device = "/dev/sda2";
-  }];
+	  # Use the gummiboot efi boot loader.
+	  boot.loader.gummiboot.enable = true;
+	  boot.loader.efi.canTouchEfiVariables = true;
+	  boot.initrd.kernelModules = [ "fbcon"];
+	  boot.initrd.luks.devices = [{
+		name = "luksroot"; device = "/dev/sdb2";
+	  }];
 
-  swapDevices = [ { device = "/var/swapfile"; } ];
+	  swapDevices = [ { device = "/swapfile"; } ];
 
-  networking.hostName = "thall"; # Define your hostname.
-  networking.hostId = "7ba8afd9";
-  networking.wireless.enable = true;  # Enables wireless.
+	  networking.hostName = "thall"; # Define your hostname.
+	  networking.hostId = "7ba8afd9";
+	  networking.wireless.enable = true;  # Enables wireless.
 
-  i18n = {
-    consoleFont = "lat9w-16";
-    consoleKeyMap = "sv-latin1";
-    defaultLocale = "en_US.UTF-8";
-  };
-  time.timeZone = "Europe/Stockholm";
+	  i18n = {
+	    consoleFont = "lat9w-16";
+	    consoleKeyMap = "sv-latin1";
+	    defaultLocale = "en_US.UTF-8";
+	  };
+	  time.timeZone = "Europe/Stockholm";
 
-  environment.systemPackages = with pkgs; [
-    wget vim tmux curl sudo
-	colordiff
-	lsof
-	strace
-	htop
-	man
-	rxvt_unicode
-	zip
-	xfontsel
-	git
-	gnumake
+	  environment.systemPackages = with pkgs; [
+	    wget vim tmux curl sudo
+		colordiff
+		lsof
+		strace
+		htop
+		man
+		rxvt_unicode
+		zip
+		xfontsel
+		git
+		gnumake
 
-	xlibs.xf86inputsynaptics
+		xlibs.xf86inputsynaptics
 
-	mplayer
-	feh
-	rtorrent
-	vlc
+		mplayer
+		feh
+		rtorrent
+		vlc
 
-	haskellPackages.xmobar
+		haskellPackages.xmobar
+		dmenu
 
-	# Sound
-	pavucontrol
+		# Sound
+		pavucontrol
   ];
 
 	fonts = {
@@ -80,7 +82,7 @@
   services.xserver = {
 	autorun = false;
 	enable = true;
-  	# videoDrivers = [ "intel" ];
+  	videoDrivers = [ "nvidiaLegacy340" ];
   	# vaapiDrivers = [ pkgs.vaapiIntel pkgs.vaapiVdpau ];
   	layout = "se";
   	multitouch.enable = true;
@@ -144,5 +146,6 @@
 		};
 	};
 
+  system.stateVersion = "15.09";
 }
 
