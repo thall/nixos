@@ -51,6 +51,8 @@
 		git
 		gnumake
 		pciutils
+		unrar
+		hwinfo
 
 		xlibs.xf86inputsynaptics
 
