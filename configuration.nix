@@ -29,6 +29,7 @@
 	  networking.hostName = "thall"; # Define your hostname.
 	  networking.hostId = "7ba8afd9";
 	  networking.wireless.enable = true;  # Enables wireless.
+	  networking.wireless.driver = "wext"; #MBP2009 specific
 
 	  i18n = {
 	    consoleFont = "lat9w-16";
