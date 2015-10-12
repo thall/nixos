@@ -11,7 +11,12 @@
 	    ];
 	  # TODO
 	  #  FONT,
-	nixpkgs.config.allowUnfree = true;
+	nixpkgs.config = {
+		allowUnfree = true;
+		firefox = {
+			enableAdobeFlash = true;
+		};
+	};
 
 	  # Use the gummiboot efi boot loader.
 	  boot.loader.gummiboot.enable = true;
@@ -53,6 +58,7 @@
 		pciutils
 		unrar
 		hwinfo
+		pkgs.firefoxWrapper 
 
 		xlibs.xf86inputsynaptics
 
