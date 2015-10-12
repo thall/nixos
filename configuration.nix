@@ -10,7 +10,7 @@
 	      ./hardware-configuration.nix
 	    ];
 	  # TODO
-	  #  FONT, SSD Optim
+	  #  FONT,
 	nixpkgs.config.allowUnfree = true;
 
 	  # Use the gummiboot efi boot loader.
@@ -20,6 +20,9 @@
 	  boot.initrd.luks.devices = [{
 		name = "luksroot"; device = "/dev/sdb2";
 	  }];
+
+          fileSystems."/".options = "defaults,noatime,discard";
+          fileSystems."/boot".options = "defaults,noatime,discard";
 
 	  swapDevices = [ { device = "/swapfile"; } ];
 
