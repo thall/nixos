@@ -93,8 +93,15 @@
   	# vaapiDrivers = [ pkgs.vaapiIntel pkgs.vaapiVdpau ];
   	layout = "se";
   	multitouch.enable = true;
-  	synaptics.enable = true;
-  	synaptics.tapButtons = false;
+	synaptics = {
+		enable = true;
+		tapButtons = false;
+		additionalOptions = ''
+			Option "TapButton1" "0"
+			Option "TapButton2" "0"
+			Option "TapButton3" "0"
+		'';
+	};
 
   	windowManager = {
 		default = "xmonad";
