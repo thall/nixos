@@ -108,6 +108,9 @@
 			Option "TapButton3" "0"
 		'';
 	};
+	deviceSection = ''
+		Option "NoLogo" "true"
+	'';
 
   	windowManager = {
 		default = "xmonad";
