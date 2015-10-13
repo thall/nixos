@@ -96,7 +96,7 @@
 	autorun = false;
 	enable = true;
   	videoDrivers = [ "nvidiaLegacy340" ];
-  	# vaapiDrivers = [ pkgs.vaapiIntel pkgs.vaapiVdpau ];
+	vaapiDrivers = [ pkgs.vaapiVdpau ];
   	layout = "se";
   	multitouch.enable = true;
 	synaptics = {
