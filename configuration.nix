@@ -96,7 +96,7 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-    autorun = false;
+    autorun = true;
     enable = true;
     videoDrivers = [ "nvidiaLegacy340" ];
     vaapiDrivers = [ pkgs.vaapiVdpau ];
