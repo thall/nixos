@@ -24,6 +24,7 @@
   boot.initrd.luks.devices = [{
     name = "luksroot"; device = "/dev/sdb2";
   }];
+  boot.tmpOnTmpfs = true;
 
   fileSystems."/".options = "defaults,noatime,discard";
   fileSystems."/boot".options = "defaults,noatime,discard";
