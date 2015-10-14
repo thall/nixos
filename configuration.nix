@@ -60,6 +60,7 @@
     unrar
     hwinfo
     pkgs.firefoxWrapper 
+    glxinfo
 
     xlibs.xf86inputsynaptics
 
@@ -90,6 +91,8 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
 
   # Enable the X11 windowing system.
   services.xserver = {
