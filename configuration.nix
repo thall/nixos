@@ -134,8 +134,6 @@
     };
   };
 
-  services.printing.enable = true;
-
   users.extraUsers.thall = {
     createHome = true;
     home = "/home/thall";
