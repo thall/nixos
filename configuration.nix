@@ -1,173 +1,171 @@
-	# Edit this configuration file to define what should be installed on
-	# your system.  Help is available in the configuration.nix(5) man page
-	# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
-	{ config, pkgs, ... }:
+{ config, pkgs, ... }:
 
-	{
-	  imports =
-	    [ # Include the results of the hardware scan.
-	      ./hardware-configuration.nix
-	    ];
-	  # TODO
-	  #  FONT,
-	nixpkgs.config = {
-		allowUnfree = true;
-		firefox = {
-			enableAdobeFlash = true;
-		};
-	};
+{
+  imports =
+    [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ];
 
-	  # Use the gummiboot efi boot loader.
-	  boot.loader.gummiboot.enable = true;
-	  boot.loader.efi.canTouchEfiVariables = true;
-	  boot.initrd.kernelModules = [ "fbcon"];
-	  boot.initrd.luks.devices = [{
-		name = "luksroot"; device = "/dev/sdb2";
-	  }];
+  nixpkgs.config = {
+    allowUnfree = true;
+    firefox = {
+      enableAdobeFlash = true;
+    };
+  };
 
-          fileSystems."/".options = "defaults,noatime,discard";
-          fileSystems."/boot".options = "defaults,noatime,discard";
+  # Use the gummiboot efi boot loader.
+  boot.loader.gummiboot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.kernelModules = [ "fbcon"];
+  boot.initrd.luks.devices = [{
+    name = "luksroot"; device = "/dev/sdb2";
+  }];
 
-	  swapDevices = [ { device = "/swapfile"; } ];
+  fileSystems."/".options = "defaults,noatime,discard";
+  fileSystems."/boot".options = "defaults,noatime,discard";
 
-	  networking.hostName = "thall"; # Define your hostname.
-	  networking.hostId = "7ba8afd9";
-	  networking.wireless.enable = true;  # Enables wireless.
-	  networking.wireless.driver = "wext"; #MBP2009 specific
+  swapDevices = [ { device = "/swapfile"; } ];
 
-	  i18n = {
-	    consoleFont = "lat9w-16";
-	    consoleKeyMap = "sv-latin1";
-	    defaultLocale = "en_US.UTF-8";
-	  };
-	  time.timeZone = "Europe/Stockholm";
+  networking.hostName = "thall"; # Define your hostname.
+  networking.hostId = "7ba8afd9";
+  networking.wireless.enable = true;  # Enables wireless.
+  networking.wireless.driver = "wext"; #MBP2009 specific
+  networking.firewall.enable = false;
 
-	  environment.systemPackages = with pkgs; [
-	    wget vim tmux curl sudo
-		colordiff
-		lsof
-		strace
-		htop
-		man
-		rxvt_unicode
-		zip
-		xfontsel
-		git
-		gnumake
-		pciutils
-		unrar
-		hwinfo
-		pkgs.firefoxWrapper 
+  i18n = {
+    consoleFont = "lat9w-16";
+    consoleKeyMap = "sv-latin1";
+    defaultLocale = "en_US.UTF-8";
+  };
+  time.timeZone = "Europe/Stockholm";
 
-		xlibs.xf86inputsynaptics
+  environment.systemPackages = with pkgs; [
+    wget vim tmux curl sudo
+    colordiff
+    lsof
+    strace
+    htop
+    man
+    rxvt_unicode
+    zip
+    xfontsel
+    git
+    gnumake
+    pciutils
+    unrar
+    hwinfo
+    pkgs.firefoxWrapper 
 
-		mplayer
-		feh
-		rtorrent
-		vlc
+    xlibs.xf86inputsynaptics
 
-		haskellPackages.xmobar
-		dmenu
+    mplayer
+    feh
+    rtorrent
+    vlc
 
-		# Sound
-		pavucontrol
+    haskellPackages.xmobar
+    dmenu
+
+    pavucontrol
   ];
 
-	fonts = {
-		enableFontDir = true;
-		enableCoreFonts = true;
-		enableGhostscriptFonts = true;	
-		fonts = with pkgs; [	
-			dejavu_fonts
-			freefont_ttf
-			inconsolata
-			terminus_font
-		];
-	};
+  fonts = {
+    enableFontDir = true;
+    enableCoreFonts = true;
+    enableGhostscriptFonts = true;	
+    fonts = with pkgs; [	
+      dejavu_fonts
+      freefont_ttf
+      inconsolata
+      terminus_font
+    ];
+  };
 
-	# Sound 
-	sound.enable = true;
-	hardware.pulseaudio.enable = true;
-	
+  # Sound 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
 
   # Enable the X11 windowing system.
   services.xserver = {
-	autorun = false;
-	enable = true;
-  	videoDrivers = [ "nvidiaLegacy340" ];
-	vaapiDrivers = [ pkgs.vaapiVdpau ];
-  	layout = "se";
-  	multitouch.enable = true;
-	synaptics = {
-		enable = true;
-		tapButtons = false;
-		additionalOptions = ''
-			Option "TapButton1" "0"
-			Option "TapButton2" "0"
-			Option "TapButton3" "0"
-		'';
-	};
-	deviceSection = ''
-		Option "NoLogo" "true"
-	'';
+    autorun = false;
+    enable = true;
+    videoDrivers = [ "nvidiaLegacy340" ];
+    vaapiDrivers = [ pkgs.vaapiVdpau ];
+    layout = "se";
+    multitouch.enable = true;
+    synaptics = {
+      enable = true;
+      tapButtons = false;
+      additionalOptions = ''
+        Option "TapButton1" "0"
+        Option "TapButton2" "0"
+        Option "TapButton3" "0"
+        '';
+    };
+    deviceSection = ''
+      Option "NoLogo" "true"
+      '';
 
-  	windowManager = {
-		default = "xmonad";
-  		xmonad.enable = true;
-  		xmonad.enableContribAndExtras = true;
-	};
+    windowManager = {
+      default = "xmonad";
+      xmonad.enable = true;
+      xmonad.enableContribAndExtras = true;
+    };
 
-	displayManager = {
-		slim = {
-			enable = true;
-			defaultUser = "thall";
-#			theme = pkgs.slimThemes.nixosSlim;
-		};
-		sessionCommands = ''
-			xsetroot -cursor_name left_ptr
-			xrdb -merge ~/.Xresources
-		'';
-	};
+    displayManager = {
+      slim = {
+        enable = true;
+        defaultUser = "thall";
+      };
+      sessionCommands = ''
+        xsetroot -cursor_name left_ptr
+        xrdb -merge ~/.Xresources
+        '';
+    };
 
-	desktopManager = {
-		default = "none";
-		xterm.enable = false;
-	};
-
+    desktopManager = {
+      default = "none";
+      xterm.enable = false;
+    };
   };
+
   services.printing.enable = true;
 
-	users.extraUsers.thall = {
-		createHome = true;
-		home = "/home/thall";
-		extraGroups = [ "wheel" "cdrom" "disk" "audio" ];
-		isNormalUser = true;
-		uid = 1000;
-		useDefaultShell = true;
-	};
-	security.sudo.enable = true;
-	
-	programs.bash = {
-		enableCompletion = true;
-		interactiveShellInit = ''
-			export EDITOR=vim
-			
-			# Java
-			export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
-			export _JAVA_AWT_WM_NONREPARENTING=1
-			
-			PS1='[\w]$ '
-		'';
-		shellAliases = {
-			ls="ls --color=auto";
-			l="ls -alh";
-			ll="ls -alh";
-			diff="colordiff";
-			grep="grep -i --color=auto";
-			less="less -R";
-		};
-	};
+  users.extraUsers.thall = {
+    createHome = true;
+    home = "/home/thall";
+    extraGroups = [ "wheel" "cdrom" "disk" "audio" ];
+    isNormalUser = true;
+    uid = 1000;
+    useDefaultShell = true;
+  };
+  security.sudo.enable = true;
+
+  programs.bash = {
+    enableCompletion = true;
+    interactiveShellInit = ''
+      export EDITOR=vim
+
+      # Java
+      export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
+      export _JAVA_AWT_WM_NONREPARENTING=1
+
+      PS1='[\w]$ '
+      '';
+    shellAliases = {
+      ls="ls --color=auto";
+      l="ls -alh";
+      ll="ls -alh";
+      diff="colordiff";
+      grep="grep -i --color=auto";
+      less="less -R";
+    };
+  };
 
   system.stateVersion = "15.09";
 }
