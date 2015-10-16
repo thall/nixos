@@ -20,6 +20,11 @@
       mumble = pkgs.mumble.override {
         pulseSupport = true;
       };
+
+      mplayer = pkgs.mplayer.override {
+        vdpauSupport = true;
+        pulseSupport = true;
+      };
     };
   };
 
