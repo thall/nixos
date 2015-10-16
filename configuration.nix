@@ -36,6 +36,7 @@
     name = "luksroot"; device = "/dev/sdb2";
   }];
   boot.tmpOnTmpfs = true;
+  boot.kernel.sysctl = { "vm.swappiness" = 10; }; #SSD OPTIMIZATION
 
   fileSystems."/".options = "defaults,noatime,discard";
   fileSystems."/boot".options = "defaults,noatime,discard";
