@@ -15,6 +15,12 @@
     firefox = {
       enableAdobeFlash = true;
     };
+
+    packageOverrides = pkgs: with pkgs; {
+      mumble = pkgs.mumble.override {
+        pulseSupport = true;
+      };
+    };
   };
 
   # Use the gummiboot efi boot loader.
@@ -68,6 +74,7 @@
     feh
     rtorrent
     vlc
+    mumble
 
     haskellPackages.xmobar
     dmenu
