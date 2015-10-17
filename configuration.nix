@@ -31,7 +31,6 @@
   # Use the gummiboot efi boot loader.
   boot.loader.gummiboot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "fbcon"];
   boot.initrd.luks.devices = [{
     name = "luksroot"; device = "/dev/sdb2";
   }];
