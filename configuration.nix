@@ -161,7 +161,7 @@
   users.extraUsers.thall = {
     createHome = true;
     home = "/home/thall";
-    extraGroups = [ "wheel" "cdrom" "disk" "audio" ];
+    extraGroups = [ "wheel" "cdrom" "disk" "audio" "docker" ];
     isNormalUser = true;
     uid = 1000;
     useDefaultShell = true;
@@ -188,6 +188,8 @@
       less="less -R";
     };
   };
+
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "15.09";
 }
