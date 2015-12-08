@@ -16,6 +16,13 @@
       enableAdobeFlash = true;
     };
 
+    chromium = {
+      enablePepperFlash = true; # Chromium removed support for Mozilla (NPAPI) plugins so Adobe Flash no longer works 
+      enablePepperPDF = true;
+      enableNaCl = true;
+      enableWideVine = true;
+      pulseSupport = true;
+    };
     packageOverrides = pkgs: with pkgs; {
       mumble = pkgs.mumble.override {
         pulseSupport = true;
@@ -72,7 +79,7 @@
     hwinfo
     pkgs.firefoxWrapper 
     glxinfo
-
+    chromium
     xlibs.xf86inputsynaptics
 
     mplayer
