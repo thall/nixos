@@ -71,6 +71,7 @@
     man
     rxvt_unicode
     zip
+    unzip
     xfontsel
     git
     gnumake
