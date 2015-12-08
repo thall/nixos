@@ -63,36 +63,37 @@
   time.timeZone = "Europe/Stockholm";
 
   environment.systemPackages = with pkgs; [
-    wget vim tmux curl sudo
-    colordiff
-    lsof
-    strace
-    htop
-    man
-    rxvt_unicode
-    zip
-    unzip
-    xfontsel
-    git
-    gnumake
-    pciutils
-    unrar
-    hwinfo
-    pkgs.firefoxWrapper 
-    glxinfo
     chromium
-    xlibs.xf86inputsynaptics
-
-    mplayer
-    feh
-    rtorrent
-    vlc
-    mumble
-
-    haskellPackages.xmobar
+    colordiff
+    curl
     dmenu
-
+    feh
+    git
+    glxinfo
+    gnumake
+    haskellPackages.xmobar
+    htop
+    hwinfo
+    lsof
+    man
+    mplayer
+    mumble
     pavucontrol
+    pciutils
+    pkgs.firefoxWrapper
+    rtorrent
+    rxvt_unicode
+    strace
+    sudo
+    tmux
+    unrar
+    unzip
+    vim
+    vlc
+    wget
+    xfontsel
+    xlibs.xf86inputsynaptics
+    zip
   ];
 
   fonts = {
