@@ -24,9 +24,6 @@
       pulseSupport = true;
     };
     packageOverrides = pkgs: with pkgs; {
-      mumble = pkgs.mumble.override {
-        pulseSupport = true;
-      };
 
       mplayer = pkgs.mplayer.override {
         vdpauSupport = true;
@@ -77,7 +74,6 @@
     lsof
     man
     mplayer
-    mumble
     pavucontrol
     pciutils
     pkgs.firefoxWrapper
