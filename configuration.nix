@@ -185,6 +185,7 @@
       less="less -R";
     };
   };
+  programs.light.enable = true;
 
   virtualisation.docker.enable = true;
 
