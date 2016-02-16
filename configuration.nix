@@ -184,6 +184,8 @@
       diff="colordiff";
       grep="grep -i --color=auto";
       less="less -R";
+      livestreamer="livestreamer --player mplayer";
+      tmux="tmux -2";
     };
   };
   programs.light.enable = true;
