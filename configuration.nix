@@ -42,8 +42,8 @@
   boot.tmpOnTmpfs = true;
   boot.kernel.sysctl = { "vm.swappiness" = 10; }; #SSD OPTIMIZATION
 
-  fileSystems."/".options = "defaults,noatime,discard";
-  fileSystems."/boot".options = "defaults,noatime,discard";
+  fileSystems."/".options = [ "defaults" "noatime" "discard"];
+  fileSystems."/boot".options = ["defaults" "noatime" "discard"];
 
   swapDevices = [ { device = "/swapfile"; } ];
 
