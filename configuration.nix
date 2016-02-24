@@ -33,24 +33,10 @@
     };
   };
 
-  # Use the gummiboot efi boot loader.
-  boot.loader.gummiboot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices = [{
-    name = "luksroot"; device = "/dev/sdb2";
-  }];
-  boot.tmpOnTmpfs = true;
-  boot.kernel.sysctl = { "vm.swappiness" = 10; }; #SSD OPTIMIZATION
-
-  fileSystems."/".options = [ "defaults" "noatime" "discard"];
-  fileSystems."/boot".options = ["defaults" "noatime" "discard"];
-
-  swapDevices = [ { device = "/swapfile"; } ];
 
   networking.hostName = "thall"; # Define your hostname.
   networking.hostId = "7ba8afd9";
   networking.wireless.enable = true;  # Enables wireless.
-  networking.wireless.driver = "wext"; #MBP2009 specific
   networking.firewall.enable = false;
 
   i18n = {
@@ -116,8 +102,6 @@
   services.xserver = {
     autorun = true;
     enable = true;
-    videoDrivers = [ "nvidiaLegacy340" ];
-    vaapiDrivers = [ pkgs.vaapiVdpau ];
     layout = "se";
     multitouch.enable = true;
     synaptics = {

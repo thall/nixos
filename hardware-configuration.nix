@@ -16,13 +16,34 @@
     { device = "/dev/disk/by-uuid/9aa7fb10-6cf3-40af-8098-429d44197008";
       fsType = "ext4";
     };
+  fileSystems."/".options = [ "defaults" "noatime" "discard"];
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/3CA4-F723";
       fsType = "vfat";
     };
+  fileSystems."/boot".options = ["defaults" "noatime" "discard"];
 
-  swapDevices = [ ];
+  # Use the gummiboot efi boot loader.
+  boot.loader.gummiboot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.luks.devices = [{
+    name = "luksroot"; device = "/dev/sdb2";
+  }];
+  boot.tmpOnTmpfs = true;
+  boot.kernel.sysctl = { "vm.swappiness" = 10; }; #SSD OPTIMIZATION
+
+  swapDevices = [ {
+    device = "/var/swap";
+    size = 4096;
+  } ];
 
   nix.maxJobs = 2;
+
+  networking.wireless.driver = "wext"; #MBP2009 specific
+
+  services.xserver = {
+    videoDrivers = [ "nvidiaLegacy340" ];
+    vaapiDrivers = [ pkgs.vaapiVdpau ];
+  };
 }
