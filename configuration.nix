@@ -47,6 +47,7 @@
     git
     glxinfo
     gnumake
+    google-chrome
     haskellPackages.xmobar
     htop
     hwinfo
