@@ -133,13 +133,12 @@
     };
   };
 
+  users.mutableUsers = false;
   users.extraUsers.thall = {
-    createHome = true;
-    home = "/home/thall";
     extraGroups = [ "wheel" "cdrom" "disk" "audio" "docker" ];
     isNormalUser = true;
     uid = 1000;
-    useDefaultShell = true;
+    passwordFile = "/etc/passwd.d/thall.passwd";
   };
   security.sudo.enable = true;
 

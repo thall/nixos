@@ -6,3 +6,6 @@ set -e
 cp /etc/nixos/hardware-configuration.nix .
 sudo mv /etc/nixos /etc/nixos_delete_me
 sudo ln -s $(pwd) /etc/nixos
+
+nix-env -i mkpasswd
+mkpasswd -m sha-512
