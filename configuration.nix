@@ -17,13 +17,6 @@
       enableAdobeFlash = true;
     };
 
-    chromium = {
-      enablePepperFlash = true; # Chromium removed support for Mozilla (NPAPI) plugins so Adobe Flash no longer works 
-      enablePepperPDF = true;
-      enableNaCl = true;
-      enableWideVine = true;
-      pulseSupport = true;
-    };
     packageOverrides = pkgs: with pkgs; {
 
       mplayer = pkgs.mplayer.override {
@@ -47,7 +40,6 @@
   time.timeZone = "Europe/Stockholm";
 
   environment.systemPackages = with pkgs; [
-    chromium
     colordiff
     curl
     dmenu
