@@ -42,8 +42,6 @@
 
   networking.wireless.driver = "wext"; #MBP2009 specific
 
-  services.xserver = {
-    videoDrivers = [ "nvidiaLegacy340" ];
-    vaapiDrivers = [ pkgs.vaapiVdpau ];
-  };
+  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
+  services.xserver.videoDrivers = [ "nvidiaLegacy340" ];
 }

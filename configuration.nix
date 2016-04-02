@@ -56,7 +56,7 @@
     mplayer
     pavucontrol
     pciutils
-    pkgs.firefoxWrapper
+    firefox
     rtorrent
     rxvt_unicode
     strace
@@ -168,6 +168,6 @@
 
   virtualisation.docker.enable = true;
 
-  system.stateVersion = "15.09";
+  system.stateVersion = "16.03";
 }
 
