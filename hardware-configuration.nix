@@ -42,6 +42,13 @@
 
   networking.wireless.driver = "wext"; #MBP2009 specific
 
-  hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau ];
+  hardware.opengl = {
+    extraPackages = with pkgs; [ vaapiVdpau ];
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
   services.xserver.videoDrivers = [ "nvidiaLegacy340" ];
+
+  nixpkgs.config.allowUnfree = true;
 }

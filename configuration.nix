@@ -11,7 +11,6 @@
     ];
 
   nixpkgs.config = {
-    allowUnfree = true;
     firefox = {
       enableGoogleTalkPlugin = true;
       enableAdobeFlash = true;
@@ -87,9 +86,6 @@
   # Sound 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
 
   # Enable the X11 windowing system.
   services.xserver = {
