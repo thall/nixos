@@ -40,6 +40,7 @@
 
   nix.maxJobs = 2;
 
+  networking.hostId = "7ba8afd9";
   networking.wireless.driver = "wext"; #MBP2009 specific
 
   hardware.opengl = {
