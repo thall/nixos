@@ -19,8 +19,7 @@ else
   exit 1
 fi
 
-cp /etc/nixos/hardware-configuration.nix $HARDWARE_CONF
-ln -sf $HARDWARE_CONF hardware-configuration.nix
+ln -s $HARDWARE_CONF hardware-configuration.nix
 sudo mv /etc/nixos /etc/nixos_delete_me
 sudo ln -s $(pwd) /etc/nixos
 
