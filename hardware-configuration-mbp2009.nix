@@ -41,6 +41,7 @@
   nix.maxJobs = 2;
 
   networking.hostId = "7ba8afd9";
+  networking.hostName = "thallmbp"; # Define your hostname.
   networking.wireless.driver = "wext"; #MBP2009 specific
 
   hardware.opengl = {
@@ -49,7 +50,17 @@
     driSupport32Bit = true;
   };
 
-  services.xserver.videoDrivers = [ "nvidiaLegacy340" ];
+  services.xserver = {
+    synaptics.additionalOptions = ''
+        Option "TapButton1" "0"
+        Option "TapButton2" "0"
+        Option "TapButton3" "0"
+        '';
+    deviceSection = ''
+      Option "NoLogo" "true"
+      '';
+    videoDrivers = [ "nvidiaLegacy340" ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 }

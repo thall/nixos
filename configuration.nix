@@ -26,7 +26,6 @@
   };
 
 
-  networking.hostName = "thall"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless.
   networking.firewall.enable = false;
 
@@ -92,18 +91,11 @@
     enable = true;
     layout = "se";
     multitouch.enable = true;
+
     synaptics = {
       enable = true;
       tapButtons = false;
-      additionalOptions = ''
-        Option "TapButton1" "0"
-        Option "TapButton2" "0"
-        Option "TapButton3" "0"
-        '';
     };
-    deviceSection = ''
-      Option "NoLogo" "true"
-      '';
 
     windowManager = {
       default = "xmonad";
