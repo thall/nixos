@@ -61,6 +61,4 @@
       '';
     videoDrivers = [ "nvidiaLegacy340" ];
   };
-
-  nixpkgs.config.allowUnfree = true;
 }

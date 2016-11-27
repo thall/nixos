@@ -11,6 +11,8 @@
     ];
 
   nixpkgs.config = {
+    allowUnfree = true;
+
     firefox = {
       enableGoogleTalkPlugin = true;
       enableAdobeFlash = true;
@@ -28,6 +30,10 @@
 
   networking.wireless.enable = true;  # Enables wireless.
   networking.firewall.enable = false;
+  networking.extraHosts = ''
+    127.0.0.1 nixos
+    127.0.0.1 edgarcube
+  '';
 
   i18n = {
     consoleFont = "lat9w-16";
@@ -36,38 +42,49 @@
   };
   time.timeZone = "Europe/Stockholm";
 
-  environment.systemPackages = with pkgs; [
-    colordiff
-    curl
-    dmenu
-    feh
-    git
-    glxinfo
-    gnumake
-    google-chrome
-    haskellPackages.xmobar
-    htop
-    hwinfo
-    lsof
-    man
-    mplayer
-    pavucontrol
-    pciutils
-    firefox
-    rtorrent
-    rxvt_unicode
-    strace
-    sudo
-    tmux
-    unrar
-    unzip
-    vim
-    vlc
-    wget
-    xfontsel
-    xlibs.xf86inputsynaptics
-    zip
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      colordiff
+      curl
+      dmenu
+      feh
+      git
+      glxinfo
+      gnumake
+      google-chrome
+      haskellPackages.xmobar
+      htop
+      hwinfo
+      lsof
+      man
+      mplayer
+      pavucontrol
+      pciutils
+      openjdk
+      firefox
+      rofi
+      rtorrent
+      rxvt_unicode
+      spotify
+      strace
+      sudo
+      tmux
+      termite
+      unrar
+      unzip
+      vim
+      vlc
+      wget
+      xfontsel
+      xlibs.xf86inputsynaptics
+      zip
+    ];
+    extraInit = ''
+      # Java
+      export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
+      export _JAVA_AWT_WM_NONREPARENTING=1
+    '';
+  };
 
   fonts = {
     enableFontDir = true;
@@ -83,40 +100,72 @@
 
   # Sound 
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    zeroconf.discovery.enable = true;
+#    package = pkgs.pulseaudioFull;
+#    tcp.enable = true;
+  };
 
   # Enable the X11 windowing system.
-  services.xserver = {
-    autorun = true;
-    enable = true;
-    layout = "se";
-    multitouch.enable = true;
-
-    synaptics = {
+  services = {
+    avahi.enable = true;
+    printing = {
       enable = true;
-      tapButtons = false;
+      gutenprint = true;
     };
+    xserver = {
+      autorun = true;
+      enable = true;
+      layout = "se";
+      multitouch.enable = true;
+      resolutions = [ { x = 1600; y = 900; } ];
 
-    windowManager = {
-      default = "xmonad";
-      xmonad.enable = true;
-      xmonad.enableContribAndExtras = true;
-    };
-
-    displayManager = {
-      slim = {
+      libinput = {
         enable = true;
-        defaultUser = "thall";
+        clickMethod = "clickfinger";
+        tapping = false; 
       };
-      sessionCommands = ''
-        xsetroot -cursor_name left_ptr
-        xrdb -merge ~/.Xresources
-        '';
-    };
 
-    desktopManager = {
-      default = "none";
-      xterm.enable = false;
+      windowManager = {
+        default = "xmonad";
+        xmonad.enable = true;
+        xmonad.enableContribAndExtras = true;
+      };
+
+      displayManager = {
+        slim = {
+          enable = true;
+          defaultUser = "niclast";
+        };
+        sessionCommands = ''
+          xsetroot -cursor_name left_ptr
+          xrdb -merge ~/.Xresources
+          feh --bg-scale ~/nix-wallpaper-simple-blue.png &
+          '';
+      };
+
+      desktopManager = {
+        default = "none";
+        xterm.enable = false;
+      };
+    };
+    logstash = {
+      enable = true;
+      inputConfig = ''
+        # Read from journal
+        pipe {
+          command => "${pkgs.systemd}/bin/journalctl -f -o json"
+          type => "syslog"
+          codec => "json"
+        }
+      '';
+      outputConfig = ''
+        elasticsearch {
+                hosts => "172.20.0.2:9200"
+        }
+      '';
+
     };
   };
 
@@ -127,6 +176,12 @@
     uid = 1000;
     passwordFile = "/etc/passwd.d/thall.passwd";
   };
+  users.extraUsers.niclast = {
+    extraGroups = [ "wheel" "cdrom" "disk" "audio" "docker" "libvirt" ];
+    isNormalUser = true;
+    uid = 1001;
+    passwordFile = "/etc/passwd.d/niclast.passwd";
+  };
   security.sudo.enable = true;
 
   programs.bash = {
@@ -134,11 +189,9 @@
     interactiveShellInit = ''
       export EDITOR=vim
 
-      # Java
-      export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
-      export _JAVA_AWT_WM_NONREPARENTING=1
-
       PS1='[\w]$ '
+
+      export PROMPT_COMMAND="history -a"
       '';
     shellAliases = {
       ls="ls --color=auto";
@@ -153,8 +206,11 @@
   };
   programs.light.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
 
-  system.stateVersion = "16.03";
+  system.stateVersion = "17.09";
 }
 
