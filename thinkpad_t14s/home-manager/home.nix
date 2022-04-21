@@ -10,6 +10,7 @@
     pkgs.jetbrains.webstorm
     pkgs.jq
     pkgs.nodejs
+    pkgs.ledger-live-desktop
     pkgs.patchelf
     pkgs.peek # tool for recording GIFs
     pkgs.python3

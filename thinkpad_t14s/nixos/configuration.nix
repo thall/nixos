@@ -71,6 +71,15 @@
     package = pkgs.pulseaudioFull;
   };
 
+  # Ledger udev rules
+  # Required for Ledger Live to detect Ledger Nano S Plus via USB
+  # https://github.com/LedgerHQ/udev-rules/blob/2776324af6df36c2af4d2e8e92a1c98c281117c9/20-hw1.rules
+  # Assigns `thall` as owner.
+  services.udev.extraRules = ''
+    # Ledger Test, Nano S Plus (idProduct=5011)
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0005|5000|5001|5002|5003|5004|5005|5006|5007|5008|5009|500a|500b|500c|500d|500e|500f|5010|5011|5012|5013|5014|5015|5016|5017|5018|5019|501a|501b|501c|501d|501e|501f", TAG+="uaccess", TAG+="udev-acl", OWNER="thall"
+  ''
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
