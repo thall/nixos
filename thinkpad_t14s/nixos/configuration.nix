@@ -74,6 +74,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Enable Yubikey login
+  # https://nixos.wiki/wiki/Yubikey#Logging-in
+  security.pam.yubico = {
+    enable = true;
+    debug = true;
+    mode = "challenge-response";
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
   users.users.thall = {

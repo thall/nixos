@@ -23,6 +23,8 @@
     pkgs.xclip
     pkgs.yarn
     pkgs.yq
+    pkgs.yubico-pam # https://nixos.wiki/wiki/Yubikey#Logging-in
+    pkgs.yubikey-manager
   ];
   programs = {
     bash = {
