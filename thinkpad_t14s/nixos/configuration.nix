@@ -19,7 +19,7 @@
   # networking.wireless.userControlled.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Stockholm";
+  time.timeZone = "Europe/Copenhagen";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -59,16 +59,61 @@
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = false;
+  services.printing.drivers = [];
+  # services.printing.drivers = [ pkgs.cups-kyocera ]; # https://github.com/NixOS/nixpkgs/issues/182699
 
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio = {
+  # sound.enable = true;
+  # hardware.pulseaudio = {
+  #   enable = true;
+  #   
+  #   # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
+  #   # Only the full build has Bluetooth support, so it must be selected here.
+  #   package = pkgs.pulseaudioFull;
+  # };
+
+  # Enable sound with PipeWire
+  # rtkit is optional but recommended
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
-    
-    # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
-    # Only the full build has Bluetooth support, so it must be selected here.
-    package = pkgs.pulseaudioFull;
+    ##############
+    # https://github.com/NixOS/nixpkgs/issues/163066
+    # media-session.enable = true;
+    # wireplumber.enable = false;
+    ##############
+
+    # alsa.enable = true;
+    # alsa.support32Bit = true;
+    pulse.enable = true;
+
+    # Enable better audio codes on bluetooth
+    # media-session.config.bluez-monitor.rules = [
+    #   {
+    #     # Matches all cards
+    #     matches = [ { "device.name" = "~bluez_card.*"; } ];
+    #     actions = {
+    #       "update-props" = {
+    #         "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
+    #         # mSBC is not expected to work on all headset + adapter combinations.
+    #         "bluez5.msbc-support" = true;
+    #         # SBC-XQ is not expected to work on all headset + adapter combinations.
+    #         "bluez5.sbc-xq-support" = true;
+    #       };
+    #     };
+    #   }
+    #   {
+    #     matches = [
+    #       # Matches all sources
+    #       { "node.name" = "~bluez_input.*"; }
+    #       # Matches all outputs
+    #       { "node.name" = "~bluez_output.*"; }
+    #     ];
+    #     actions = {
+    #       "node.pause-on-idle" = false;
+    #     };
+    #   }
+    # ];
   };
 
   # Ledger udev rules
@@ -78,16 +123,13 @@
   services.udev.extraRules = ''
     # Ledger Test, Nano S Plus (idProduct=5011)
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0005|5000|5001|5002|5003|5004|5005|5006|5007|5008|5009|500a|500b|500c|500d|500e|500f|5010|5011|5012|5013|5014|5015|5016|5017|5018|5019|501a|501b|501c|501d|501e|501f", TAG+="uaccess", TAG+="udev-acl", OWNER="thall"
-  ''
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  '';
 
   # Enable Yubikey login
   # https://nixos.wiki/wiki/Yubikey#Logging-in
   security.pam.yubico = {
     enable = true;
-    debug = true;
+    debug = false;
     mode = "challenge-response";
   };
 
@@ -96,7 +138,7 @@
   users.users.thall = {
     createHome = true;
     isNormalUser = true;
-    extraGroups = [ "docker" "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "podman" "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
     hashedPassword = "$6$RG2hGR1grUT6Li$vDRayal/o2YW7HJ3yj0s8JjI/IgUGTJpGY8oo56IerVige8fBEvWv4VTJ3eV64WQ0cYoUSxzkZs0ijZ40J5sM1";
   };
 
@@ -130,7 +172,18 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = false;
+    podman = {
+      enable = true;
+      # alias docker = podman
+      dockerCompat = true;
+      # KO build require a docker daemon to be available.
+      # See https://github.com/ko-build/ko/issues/771
+      dockerSocket.enable = true;
+    };
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -138,7 +191,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "22.05"; # Did you read the comment?
 
 }
 

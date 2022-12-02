@@ -2,24 +2,33 @@
 
 {
   home.packages = [
+    pkgs.binutils # readelf
     pkgs.colordiff
     pkgs.gcc # Needed to compile / run Go programs
     pkgs.gnumake
     pkgs.google-cloud-sdk
+    pkgs.jetbrains.clion
     pkgs.jetbrains.goland
+    pkgs.jetbrains.idea-community
     pkgs.jetbrains.webstorm
     pkgs.jq
-    pkgs.nodejs
+    pkgs.kleopatra
     pkgs.ledger-live-desktop
+    pkgs.maven # Apache maven
+    pkgs.monero-cli
+    pkgs.monero-gui
+    pkgs.nodejs-18_x
     pkgs.patchelf
     pkgs.peek # tool for recording GIFs
     pkgs.python3
     pkgs.ripgrep
     pkgs.signal-desktop
     pkgs.spotify
+    pkgs.terraform
     pkgs.tree
     pkgs.unzip
     pkgs.vlc
+    pkgs.vscode
     pkgs.wl-clipboard
     pkgs.xclip
     pkgs.yarn
@@ -27,18 +36,68 @@
     pkgs.yubico-pam # https://nixos.wiki/wiki/Yubikey#Logging-in
     pkgs.yubikey-manager
   ];
+
   programs = {
+    alacritty = {
+      enable = true;
+      settings = {
+        window = {
+          padding = {
+            x = 8;
+            y = 8;
+          };
+          dynamic_padding = true;
+          decorations = "none";
+          startup_mode = "Maximized";
+          title = "terminal";
+          dynamic_title= true;
+        };
+        
+        font = {
+          normal = {
+            family = "Hack";
+          };
+          size = 8.0;
+        };
+
+        selection= {
+          save_to_clipboard= true;
+        };
+        
+        live_config_reload= true;
+        
+        colors = {
+          primary = {
+            background= "#2e3440";
+            foreground= "#d8dee9";
+            dim_foreground= "#a5abb6";
+          };
+        };
+      };
+    };
+
     bash = {
       enable = true;
       historyIgnore = [ "ls" "cd" "exit" ];
       shellAliases = {
+        gapit  = "gcloud auth print-identity-token";
+        g      = "git";
+        gcaan  = "git commit -a --amend --no-edit";
+        gd     = "git diff";
+        gdc    = "git diff --cached";
+        gf     = "git fetch";
+        gl     = "git log";
+        gp     = "git pull";
+        gsh    = "git show";
+        gs     = "git status";
+        gri    = "git rebase -i HEAD~10";
+        grc    = "git rebase --continue";
+        grh    = "git reset --hard";
+        gpfl   = "git push --force-with-lease";
+        gpuh   = "git push";
         urldec = "python -c \"import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))\"";
         urlenc = "python -c \"import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))\"";
-        gf     = "git fetch";
-        gs     = "git status";
-        gp     = "git pull";
         xcp    = "xclip -selection c";
-        gapit  = "gcloud auth print-identity-token";
      };
     };
 
@@ -57,6 +116,12 @@
           verbose = "true";
        };
       };
+      # delta = {
+      #   enable = true; # https://github.com/dandavison/delta
+      #   options = {
+      #     line-numbers = true;
+      #   };
+      # };
     };
 
     gh = {
@@ -65,7 +130,7 @@
 
     go = {
       enable = true;
-      package = pkgs.go_1_17;
+      package = pkgs.go_1_19;
       goPrivate = [ "github.com/einride" "go.einride.tech" ];
     };
 
@@ -76,24 +141,53 @@
       };
     };
 
+    java = {
+      enable = true;
+      package = pkgs.openjdk17;
+    };
+
     tmux = {
       enable = true;
       clock24 = true;
       historyLimit = 5000;
       keyMode = "vi";
+      terminal = "screen-256color";
       extraConfig = ''
+        # Colors
+        set -g default-terminal "tmux-256color" 
+        set -ga terminal-overrides ",xterm-termite:Tc"
+
         bind-key -T copy-mode-vi v send-keys -X begin-selection
         bind-key -T copy-mode-vi y send-keys -X copy-selection
         bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
         bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+
+        # Open new tab / window in CWD
+        bind '"' split-window -c "#{pane_current_path}"
+        bind % split-window -h -c "#{pane_current_path}"
+        bind c new-window -c "#{pane_current_path}"
+
+        # Windows
+        set -g xterm-keys on
+        set -g base-index 1
+
+        # Panes
+        bind-key -n S-Left select-pane -L
+        bind-key -n S-Right select-pane -R
+        bind-key -n S-Up select-pane -U
+        bind-key -n S-Down select-pane -D
       '';
     };
 
     vim = {
       enable = true;
-      # plugins = with pkgs.vimPlugins; [ 
-      #   vim-colors-solarized vim-terraform vim-go vim-protobuf 
-      # ];
+      plugins = with pkgs.vimPlugins; [ 
+        vim-airline
+      ];
+      extraConfig = ''
+        syntax on
+        set t_Co=256
+      '';
     };
   };
 
