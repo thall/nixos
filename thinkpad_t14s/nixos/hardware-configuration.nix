@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   hardware.cpu.amd.updateMicrocode = true;
@@ -22,19 +23,21 @@
   };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/94903bb8-9085-45d2-9a88-1dec5486546e";
+    {
+      device = "/dev/disk/by-uuid/94903bb8-9085-45d2-9a88-1dec5486546e";
       fsType = "ext4";
     };
 
   boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/f6b03ffa-6f25-4e58-926a-7d1537429077";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/68E0-3015";
+    {
+      device = "/dev/disk/by-uuid/68E0-3015";
       fsType = "vfat";
     };
 
-  swapDevices = [ 
-   { device = "/var/swapfile"; }
+  swapDevices = [
+    { device = "/var/swapfile"; }
   ];
 }
 
