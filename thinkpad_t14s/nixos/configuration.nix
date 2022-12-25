@@ -97,12 +97,6 @@
   environment.systemPackages = with pkgs; [
     firefox
     google-chrome # For Google Meet and support screen-sharing on Wayland
-    htop
-    pavucontrol
-    pciutils
-    usbutils
-    curl
-    wget
   ];
   environment.variables = {
     EDITOR = "vim";

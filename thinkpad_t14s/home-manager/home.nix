@@ -4,9 +4,11 @@
   home.packages = [
     pkgs.binutils # readelf
     pkgs.colordiff
+    pkgs.curl
     pkgs.gcc # Needed to compile / run Go programs
     pkgs.gnumake
     pkgs.google-cloud-sdk
+    pkgs.htop
     pkgs.jetbrains.clion
     pkgs.jetbrains.goland
     pkgs.jetbrains.idea-community
@@ -19,6 +21,8 @@
     pkgs.monero-gui
     pkgs.nodejs-18_x
     pkgs.patchelf
+    pkgs.pavucontrol
+    pkgs.pciutils
     pkgs.peek # tool for recording GIFs
     pkgs.python3
     pkgs.ripgrep
@@ -27,8 +31,10 @@
     pkgs.terraform
     pkgs.tree
     pkgs.unzip
+    pkgs.usbutils
     pkgs.vlc
     pkgs.vscode
+    pkgs.wget
     pkgs.wl-clipboard
     pkgs.xclip
     pkgs.yarn
