@@ -23,6 +23,7 @@
     pkgs.maven # Apache maven
     pkgs.monero-cli
     pkgs.monero-gui
+    pkgs.nixpkgs-fmt
     pkgs.nodejs-18_x
     pkgs.patchelf
     pkgs.pavucontrol
@@ -60,9 +61,9 @@
           decorations = "none";
           startup_mode = "Maximized";
           title = "terminal";
-          dynamic_title= true;
+          dynamic_title = true;
         };
-        
+
         font = {
           normal = {
             family = "Hack";
@@ -70,19 +71,11 @@
           size = 8.0;
         };
 
-        selection= {
-          save_to_clipboard= true;
+        selection = {
+          save_to_clipboard = true;
         };
-        
-        live_config_reload= true;
-        
-        colors = {
-          primary = {
-            background= "#2e3440";
-            foreground= "#d8dee9";
-            dim_foreground= "#a5abb6";
-          };
-        };
+
+        live_config_reload = true;
       };
     };
 
@@ -124,7 +117,7 @@
         };
         commit = {
           verbose = "true";
-       };
+        };
       };
       # delta = {
       #   enable = true; # https://github.com/dandavison/delta
@@ -142,6 +135,8 @@
       enable = true;
       package = pkgs.go_1_19;
       goPrivate = [ "github.com/einride" "go.einride.tech" ];
+      goPath = "go";
+      goBin = "go/bin";
     };
 
     readline = {
@@ -191,7 +186,7 @@
 
     vim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [ 
+      plugins = with pkgs.vimPlugins; [
         vim-airline
       ];
       extraConfig = ''
