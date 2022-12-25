@@ -14,25 +14,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
-  # networking.wireless.userControlled.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+  # Network
+  networking.wireless.enable = false; # Enables wireless support via wpa_supplicant.
   networking.useDHCP = false;
   networking.interfaces.enp2s0f0.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
-  # networking.interfaces.enp7s0f4u1.useDHCP = true;
   networking.networkmanager.enable = true;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -48,72 +39,28 @@
 
   # Enable fwupd 
   services.fwupd.enable = true;
-  
+
   # Use Plasma5 Ksshaskpass front-end for ssh-add
-  # programs.ssh.askPassword = "${pkgs.ksshaskpass}/bin/ksshaskpass";
   programs.ssh.startAgent = true;
-  #programs.ssh.askPassword = "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
 
   # Configure keymap in X11
   services.xserver.layout = "se";
   # services.xserver.xkbOptions = "eurosign:e";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = false;
-  services.printing.drivers = [];
-  # services.printing.drivers = [ pkgs.cups-kyocera ]; # https://github.com/NixOS/nixpkgs/issues/182699
-
-  # sound.enable = true;
-  # hardware.pulseaudio = {
-  #   enable = true;
-  #   
-  #   # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
-  #   # Only the full build has Bluetooth support, so it must be selected here.
-  #   package = pkgs.pulseaudioFull;
-  # };
+  # Enable xdg portal to get screen sharing to work on wayland
+  xdg.portal = {
+    enable = true;
+  };
 
   # Enable sound with PipeWire
   # rtkit is optional but recommended
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    ##############
-    # https://github.com/NixOS/nixpkgs/issues/163066
-    # media-session.enable = true;
-    # wireplumber.enable = false;
-    ##############
 
     # alsa.enable = true;
     # alsa.support32Bit = true;
     pulse.enable = true;
-
-    # Enable better audio codes on bluetooth
-    # media-session.config.bluez-monitor.rules = [
-    #   {
-    #     # Matches all cards
-    #     matches = [ { "device.name" = "~bluez_card.*"; } ];
-    #     actions = {
-    #       "update-props" = {
-    #         "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-    #         # mSBC is not expected to work on all headset + adapter combinations.
-    #         "bluez5.msbc-support" = true;
-    #         # SBC-XQ is not expected to work on all headset + adapter combinations.
-    #         "bluez5.sbc-xq-support" = true;
-    #       };
-    #     };
-    #   }
-    #   {
-    #     matches = [
-    #       # Matches all sources
-    #       { "node.name" = "~bluez_input.*"; }
-    #       # Matches all outputs
-    #       { "node.name" = "~bluez_output.*"; }
-    #     ];
-    #     actions = {
-    #       "node.pause-on-idle" = false;
-    #     };
-    #   }
-    # ];
   };
 
   # Ledger udev rules
@@ -161,15 +108,6 @@
     EDITOR = "vim";
   };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
   virtualisation = {
