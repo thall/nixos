@@ -83,25 +83,25 @@
       enable = true;
       historyIgnore = [ "ls" "cd" "exit" ];
       shellAliases = {
-        gapit  = "gcloud auth print-identity-token";
-        g      = "git";
-        gcaan  = "git commit -a --amend --no-edit";
-        gd     = "git diff";
-        gdc    = "git diff --cached";
-        gf     = "git fetch";
-        gl     = "git log";
-        gp     = "git pull";
-        gsh    = "git show";
-        gs     = "git status";
-        gri    = "git rebase -i HEAD~10";
-        grc    = "git rebase --continue";
-        grh    = "git reset --hard";
-        gpfl   = "git push --force-with-lease";
-        gpuh   = "git push";
+        gapit = "gcloud auth print-identity-token";
+        g = "git";
+        gcaan = "git commit -a --amend --no-edit";
+        gd = "git diff";
+        gdc = "git diff --cached";
+        gf = "git fetch";
+        gl = "git log";
+        gp = "git pull";
+        gsh = "git show";
+        gs = "git status";
+        gri = "git rebase -i HEAD~10";
+        grc = "git rebase --continue";
+        grh = "git reset --hard";
+        gpfl = "git push --force-with-lease";
+        gpuh = "git push";
         urldec = "python -c \"import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))\"";
         urlenc = "python -c \"import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))\"";
-        xcp    = "xclip -selection c";
-     };
+        xcp = "xclip -selection c";
+      };
     };
 
     git = {
@@ -119,12 +119,6 @@
           verbose = "true";
         };
       };
-      # delta = {
-      #   enable = true; # https://github.com/dandavison/delta
-      #   options = {
-      #     line-numbers = true;
-      #   };
-      # };
     };
 
     gh = {
