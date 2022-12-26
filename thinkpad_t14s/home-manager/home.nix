@@ -58,8 +58,8 @@
             y = 8;
           };
           dynamic_padding = true;
-          decorations = "none";
-          startup_mode = "Maximized";
+          decorations = "full";
+          startup_mode = "Fullscreen";
           title = "terminal";
           dynamic_title = true;
         };
@@ -68,12 +68,13 @@
           normal = {
             family = "Hack";
           };
-          size = 8.0;
+          size = 12.0;
         };
 
         selection = {
           save_to_clipboard = true;
         };
+
 
         live_config_reload = true;
       };
