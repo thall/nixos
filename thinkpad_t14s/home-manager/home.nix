@@ -102,6 +102,11 @@
         urlenc = "python -c \"import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))\"";
         xcp = "xclip -selection c";
       };
+      # workaround to get the EDITOR env set.
+      # Assigning `sessionVariables` does not work.
+      initExtra = ''
+        export EDITOR="vim"
+      '';
     };
 
     git = {

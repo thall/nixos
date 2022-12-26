@@ -98,9 +98,6 @@
   environment.systemPackages = with pkgs; [
     google-chrome # For Google Meet and support screen-sharing on Wayland
   ];
-  environment.variables = {
-    EDITOR = "vim";
-  };
 
   networking.firewall.enable = false;
 
