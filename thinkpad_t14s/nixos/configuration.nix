@@ -96,7 +96,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    firefox
     google-chrome # For Google Meet and support screen-sharing on Wayland
   ];
   environment.variables = {
