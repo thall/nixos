@@ -59,7 +59,7 @@
           };
           dynamic_padding = true;
           decorations = "full";
-          startup_mode = "Fullscreen";
+          startup_mode = "Maximized";
           title = "terminal";
           dynamic_title = true;
         };
@@ -68,7 +68,7 @@
           normal = {
             family = "Hack";
           };
-          size = 12.0;
+          size = 8.0;
         };
 
         selection = {
