@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -52,6 +52,18 @@
   xdg.portal = {
     enable = true;
   };
+
+  # Symlink the dynamic linker/load from nix storage.
+  # This sovles the problem when trying to execute static binaries which
+  # points to the linker in /lib64, which doesnt not exists by default
+  # in NixOS.
+  # Source:
+  # https://discourse.nixos.org/t/runtime-alternative-to-patchelf-set-interpreter/3539/5
+  system.activationScripts.ldso = lib.stringAfter [ "usrbinenv" ] ''
+    mkdir -m 0755 -p /lib64
+    ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
+    mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2 # atomically replace
+  '';
 
   # Enable sound with PipeWire
   # rtkit is optional but recommended
