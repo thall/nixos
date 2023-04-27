@@ -206,15 +206,6 @@
     };
   };
 
-  home.file.".local/bin/patch_interpreter" = {
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
-      set -eEuo pipefail
-      patchelf --set-interpreter "$(nix-build --no-out-link "<nixpkgs>" -A glibc)/lib64/ld-linux-x86-64.so.2" "$@"
-    '';
-  };
-
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
   home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
