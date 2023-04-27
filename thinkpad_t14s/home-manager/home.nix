@@ -88,6 +88,9 @@
         gapit = "gcloud auth print-identity-token";
         g = "git";
         gcaan = "git commit -a --amend --no-edit";
+        gchma = "git checkout master && git fetch && git reset --hard origin/master";
+        grexec = "git rebase --exec='cd backend && make' origin/master";
+        gau = "git add -u";
         gd = "git diff";
         gdc = "git diff --cached";
         gf = "git fetch";
@@ -100,6 +103,8 @@
         grh = "git reset --hard";
         gpfl = "git push --force-with-lease";
         gpuh = "git push";
+        hme = "home-manager edit";
+        hms = "home-manager switch";
         urldec = "python -c \"import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))\"";
         urlenc = "python -c \"import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))\"";
         xcp = "xclip -selection c";
