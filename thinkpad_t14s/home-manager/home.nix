@@ -55,8 +55,8 @@
         shell.program = "${pkgs.tmux}/bin/tmux";
         window = {
           padding = {
-            x = 8;
-            y = 8;
+            x = 4;
+            y = 0;
           };
           dynamic_padding = true;
           decorations = "full";
@@ -69,7 +69,7 @@
           normal = {
             family = "Hack";
           };
-          size = 8.0;
+          size = 10.0;
         };
 
         selection = {
