@@ -139,7 +139,7 @@
 
     go = {
       enable = true;
-      package = pkgs.go_1_19;
+      package = pkgs.go_1_20;
       goPrivate = [ "github.com/einride" "go.einride.tech" ];
       goPath = "go";
       goBin = "go/bin";
