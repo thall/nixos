@@ -113,6 +113,10 @@
       # Assigning `sessionVariables` does not work.
       initExtra = ''
         export EDITOR="vim"
+        source <(bookctl completion bash)
+        source <(deliverctl completion bash)
+        source <(orchestratectl completion bash)
+        source <(ownctl completion bash)
       '';
     };
 
