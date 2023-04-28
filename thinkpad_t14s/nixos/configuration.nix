@@ -75,6 +75,8 @@
     # alsa.support32Bit = true;
     pulse.enable = true;
   };
+  # Disable hspfpd
+  hardware.bluetooth.hsphfpd.enable = false;
 
   # Ledger udev rules
   # Required for Ledger Live to detect Ledger Nano S Plus via USB
