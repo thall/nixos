@@ -133,6 +133,13 @@
         };
         commit = {
           verbose = "true";
+          gpgSign = "true";
+        };
+        gpg = {
+          format = "ssh";
+        };
+        user = {
+          signingKey = "${config.home.homeDirectory}/.ssh/id_ed25519";
         };
       };
     };
