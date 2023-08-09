@@ -48,6 +48,18 @@
     pkgs.yubikey-manager
   ];
 
+  # Fix broken hypnotix package
+  nixpkgs.overlays = [(
+    final: prev:
+    {
+      hypnotix = prev.hypnotix.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          ./../../patches/hypnotix/fix_remove_crash.patch
+        ];
+      });
+    }
+  )];
+
   programs = {
     alacritty = {
       enable = true;
