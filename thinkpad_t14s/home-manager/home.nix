@@ -124,12 +124,16 @@
       };
       # workaround to get the EDITOR env set.
       # Assigning `sessionVariables` does not work.
+      # LESSQUIET, see https://github.com/wofr06/lesspipe/issues/103
       initExtra = ''
         export EDITOR="vim"
+        export LESSQUIET="true"
         source <(bookctl completion bash)
         source <(deliverctl completion bash)
         source <(orchestratectl completion bash)
         source <(ownctl completion bash)
+        source <(sagaiamctl completion bash)
+        source <(collector completion bash)
       '';
     };
 
