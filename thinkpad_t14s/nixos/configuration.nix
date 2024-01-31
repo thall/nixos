@@ -7,7 +7,7 @@
 {
   imports =
     [
-      # Include the results of the hardware scan.
+      <nixos-hardware/lenovo/thinkpad/t14s/amd/gen1>
       ./hardware-configuration.nix
       ./crowdstrike/module.nix
     ];
