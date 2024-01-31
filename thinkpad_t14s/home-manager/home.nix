@@ -12,13 +12,12 @@
     pkgs.gcc # Needed to compile / run Go programs
     pkgs.gnumake
     pkgs.google-cloud-sdk
+    pkgs.lsof
     pkgs.htop
-    pkgs.jetbrains.clion
+    pkgs.hypnotix
+    pkgs.hwinfo
     pkgs.jetbrains.goland
-    pkgs.jetbrains.idea-community
-    pkgs.jetbrains.webstorm
     pkgs.jq
-    pkgs.kleopatra
     pkgs.ledger-live-desktop
     pkgs.maven # Apache maven
     pkgs.monero-cli
@@ -45,7 +44,9 @@
     pkgs.yarn
     pkgs.yq
     pkgs.yubico-pam # https://nixos.wiki/wiki/Yubikey#Logging-in
-    pkgs.yubikey-manager
+    # Broken upstream, fix merged, channel not yet updated.
+    # pkgs.yubikey-manager 
+    pkgs.qgis
   ];
 
   # Fix broken hypnotix package
