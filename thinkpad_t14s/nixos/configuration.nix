@@ -62,17 +62,12 @@
     enable = true;
   };
 
-  # Symlink the dynamic linker/load from nix storage.
-  # This sovles the problem when trying to execute static binaries which
-  # points to the linker in /lib64, which doesnt not exists by default
-  # in NixOS.
-  # Source:
-  # https://discourse.nixos.org/t/runtime-alternative-to-patchelf-set-interpreter/3539/5
-  system.activationScripts.ldso = lib.stringAfter [ "usrbinenv" ] ''
-    mkdir -m 0755 -p /lib64
-    ln -sfn ${pkgs.glibc.out}/lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2.tmp
-    mv -f /lib64/ld-linux-x86-64.so.2.tmp /lib64/ld-linux-x86-64.so.2 # atomically replace
-  '';
+  # Support running non-nix binaries.
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+  ];
 
   # Enable sound with PipeWire
   # rtkit is optional but recommended
