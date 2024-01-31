@@ -51,6 +51,8 @@
   # Use Plasma5 Ksshaskpass front-end for ssh-add
   programs.ssh.startAgent = true;
 
+  programs.dconf.enable = true;
+
   # Configure keymap in X11
   services.xserver.layout = "se";
   # services.xserver.xkbOptions = "eurosign:e";
