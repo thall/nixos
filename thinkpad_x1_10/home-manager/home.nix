@@ -6,15 +6,17 @@
     pkgs.colordiff
     pkgs.curl
     pkgs.gcc # Needed to compile / run Go programs
+    pkgs.glxinfo
     pkgs.gnumake
     pkgs.google-cloud-sdk
-    pkgs.lsof
     pkgs.htop
-    pkgs.hypnotix
     pkgs.hwinfo
+    pkgs.hypnotix
     pkgs.jetbrains.goland
     pkgs.jq
     pkgs.ledger-live-desktop
+    pkgs.lsof
+    pkgs.lshw
     pkgs.monero-cli
     pkgs.monero-gui
     pkgs.nixpkgs-fmt
@@ -22,6 +24,7 @@
     pkgs.pciutils
     pkgs.peek # tool for recording GIFs
     pkgs.python3
+    pkgs.qgis
     pkgs.ripgrep
     pkgs.signal-desktop
     pkgs.spotify
@@ -31,12 +34,13 @@
     pkgs.usbutils
     pkgs.vlc
     pkgs.vscode
+    pkgs.vulkan-tools
+    pkgs.wayland-utils
     pkgs.wget
     pkgs.wl-clipboard
     pkgs.xclip
     pkgs.yarn
     pkgs.yq
-    pkgs.qgis
   ];
 
   programs = {
@@ -202,12 +206,16 @@
 
     vim = {
       enable = true;
+      defaultEditor = true;
       plugins = with pkgs.vimPlugins; [
         vim-airline
       ];
       extraConfig = ''
         syntax on
         set t_Co=256
+        " Syntax highlight, sensible colors for git commit verbose
+        hi diffAdded   ctermfg=green
+        hi diffRemoved ctermfg=red
       '';
     };
   };

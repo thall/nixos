@@ -19,6 +19,12 @@
 
   hardware.bluetooth.enable = true;
 
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    extraPackages = [ pkgs.intel-media-driver ];
+  };
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/4cc2dde7-dc9b-4361-8ded-be764c43efbc";
       fsType = "ext4";

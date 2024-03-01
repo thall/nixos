@@ -9,7 +9,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./crowdstrike/module.nix
     ];
+
+  # Enable crowdstrike
+  custom.falcon.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -54,11 +58,10 @@
 
   # Enable sound with PipeWire
   # rtkit is optional but recommended
+  sound.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    # alsa.support32Bit = true;
     pulse.enable = true;
   };
 
