@@ -85,6 +85,7 @@
       historyIgnore = [ "ls" "cd" "exit" ];
       shellAliases = {
         cat="bat";
+        ls="eza";
         gapit = "gcloud auth print-identity-token";
         g = "git";
         gcaan = "git commit -a --amend --no-edit";
@@ -170,6 +171,11 @@
     java = {
       enable = true;
       package = pkgs.openjdk17;
+    };
+
+    eza = {
+      enable = true;
+      icons = true;
     };
 
     firefox = {

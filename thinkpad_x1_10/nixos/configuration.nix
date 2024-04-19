@@ -34,6 +34,10 @@
     keyMap = "sv-latin1";
   };
 
+  fonts.packages = with pkgs; [
+    nerdfonts
+  ];
+
   # Enable the Plasma 5 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.displayManager.sddm.enable = true;
