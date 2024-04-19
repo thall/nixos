@@ -76,10 +76,15 @@
       };
     };
 
+    bat = {
+      enable = true;
+    };
+
     bash = {
       enable = true;
       historyIgnore = [ "ls" "cd" "exit" ];
       shellAliases = {
+        cat="bat";
         gapit = "gcloud auth print-identity-token";
         g = "git";
         gcaan = "git commit -a --amend --no-edit";
