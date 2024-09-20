@@ -39,10 +39,11 @@
   ];
 
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "se";
@@ -62,7 +63,6 @@
 
   # Enable sound with PipeWire
   # rtkit is optional but recommended
-  sound.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
