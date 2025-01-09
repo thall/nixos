@@ -5,14 +5,21 @@
     pkgs.binutils # readelf
     pkgs.colordiff
     pkgs.curl
+    pkgs.dig
     pkgs.gcc # To enable CGO in Go
     pkgs.glxinfo
     pkgs.gnumake
-    pkgs.google-cloud-sdk
+    (pkgs.google-cloud-sdk.withExtraComponents
+      (with pkgs.google-cloud-sdk.components; [
+        gke-gcloud-auth-plugin
+      ])
+    )
     pkgs.google-chrome
     pkgs.htop
     pkgs.hwinfo
     pkgs.hypnotix
+    pkgs.kubernetes
+    pkgs.kubernetes-helm
     pkgs.jetbrains.goland
     pkgs.jq
     pkgs.ledger-live-desktop
@@ -32,6 +39,7 @@
     pkgs.spotify
     pkgs.terraform
     pkgs.tree
+    pkgs.openssl
     pkgs.unzip
     pkgs.usbutils
     pkgs.vlc
@@ -49,7 +57,10 @@
     alacritty = {
       enable = true;
       settings = {
-        shell.program = "${pkgs.tmux}/bin/tmux";
+        terminal = {
+          shell.program = "${pkgs.tmux}/bin/tmux";
+        };
+
         window = {
           padding = {
             x = 4;
@@ -73,8 +84,9 @@
           save_to_clipboard = true;
         };
 
-
-        live_config_reload = true;
+        general = {
+          live_config_reload = true;
+        };
       };
     };
 
@@ -87,7 +99,6 @@
       historyIgnore = [ "ls" "cd" "exit" ];
       shellAliases = {
         cat="bat";
-        ls="eza";
         gal = "gcloud auth login --update-adc";
         gapit = "gcloud auth print-identity-token";
         g = "git";
@@ -109,6 +120,8 @@
         gpuh = "git push";
         hme = "home-manager edit";
         hms = "home-manager switch";
+        nec = "vim /etc/nixos/configuration.nix";
+        neh = "vim /etc/nixos/hardware-configuration.nix";
         urldec = "python -c \"import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))\"";
         urlenc = "python -c \"import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))\"";
         xcp = "xclip -selection c";
@@ -176,7 +189,9 @@
 
     eza = {
       enable = true;
-      icons = true;
+      enableBashIntegration = true;
+      icons = "auto";
+      git = true;
     };
 
     firefox = {
@@ -230,6 +245,21 @@
         hi diffRemoved ctermfg=red
       '';
     };
+
+    ghostty = {
+      enable = true;
+      enableBashIntegration = true;
+      settings = {
+        cursor-style = "bar";
+        cursor-style-blink = false;
+        shell-integration-features = "no-cursor";
+      };
+    };
+  };
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
   };
 
   # Add Go bin directory to $PATH
