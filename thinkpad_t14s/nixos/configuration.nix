@@ -78,7 +78,20 @@
     # alsa.enable = true;
     # alsa.support32Bit = true;
     pulse.enable = true;
+
+    # Disable headset unit profile
+    extraConfig = {
+      "51-disable-hfp" = {
+        "wireplumber.settings" = {
+          "bluetooth.autoswitch-to-headset-profile" = false;
+        };
+        "monitor.bluez.properties" = {
+          "bluez5.roles" = [ "a2dp_sink" "a2dp_source" ];
+        };
+      };
+    };
   };
+
   # Disable hspfpd
   hardware.bluetooth.hsphfpd.enable = false;
 
