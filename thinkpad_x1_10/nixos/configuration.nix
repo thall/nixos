@@ -142,6 +142,13 @@
     };
   };
 
+  # Enable QEMU
+  environment.systemPackages = with pkgs; [
+    qemu
+    virt-manager
+  ];
+  services.qemuGuest.enable = true;
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
