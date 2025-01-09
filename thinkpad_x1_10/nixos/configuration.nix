@@ -41,7 +41,7 @@
   };
 
   fonts.packages = with pkgs; [
-    nerdfonts
+    nerd-fonts.inconsolata
   ];
 
   # Enable the Plasma 5 Desktop Environment.
