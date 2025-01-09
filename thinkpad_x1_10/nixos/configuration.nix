@@ -97,7 +97,7 @@
   users.users.thall = {
     createHome = true;
     isNormalUser = true;
-    extraGroups = [ "podman" "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "docker" "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
     hashedPassword = "$6$RG2hGR1grUT6Li$vDRayal/o2YW7HJ3yj0s8JjI/IgUGTJpGY8oo56IerVige8fBEvWv4VTJ3eV64WQ0cYoUSxzkZs0ijZ40J5sM1";
   };
 
@@ -131,13 +131,13 @@
   # };
  
   virtualisation = {
-    docker.enable = false;
-    podman = {
+    docker = {
       enable = true;
-      # alias docker = podman
+    };
+    podman = {
+      enable = false;
       dockerCompat = true;
-      # KO build require a docker daemon to be available.
-      # See https://github.com/ko-build/ko/issues/771
+      # Test-Containers needs to find docker socket.
       dockerSocket.enable = true;
     };
   };
