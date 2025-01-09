@@ -27,6 +27,12 @@
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
+  # Enable Mullvad VPN
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -100,6 +106,14 @@
 
   # Start ssh agent
   programs.ssh.startAgent = true;
+
+  # Enable OpenVPN 3
+  programs.openvpn3 = {
+    enable = true;
+  };
+  services.openvpn.servers = {
+    pagodenVPN = { config = '' config /home/thall/einride/niclas.thall.openvpn.conf ''; };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
