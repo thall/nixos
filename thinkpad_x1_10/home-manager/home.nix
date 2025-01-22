@@ -260,6 +260,7 @@
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" ];
   };
+  nixpkgs.config.allowUnfree = true;
 
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
