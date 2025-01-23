@@ -33,7 +33,6 @@
     pkgs.peek # tool for recording GIFs
     pkgs.pgadmin4-desktopmode # currently broken
     pkgs.python3
-    pkgs.qgis
     pkgs.ripgrep
     pkgs.signal-desktop
     pkgs.spotify
