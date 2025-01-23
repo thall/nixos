@@ -1,18 +1,17 @@
-{ stdenv
-, lib
-, pkgs
-, dpkg
-, openssl
-, libnl
-, zlib
-, fetchurl
-, autoPatchelfHook
-, buildFHSEnv
-, writeScript
-, ...
-}:
-
-let
+{
+  stdenv,
+  lib,
+  pkgs,
+  dpkg,
+  openssl,
+  libnl,
+  zlib,
+  fetchurl,
+  autoPatchelfHook,
+  buildFHSEnv,
+  writeScript,
+  ...
+}: let
   pname = "falcon-sensor";
   arch = "amd64";
   # You need to get the binary from #it guys
@@ -23,7 +22,7 @@ let
     inherit arch src;
     name = pname;
 
-    buildInputs = [ dpkg zlib autoPatchelfHook ];
+    buildInputs = [dpkg zlib autoPatchelfHook];
 
     sourceRoot = ".";
 
@@ -43,16 +42,14 @@ let
     };
   };
 in
+  buildFHSEnv {
+    name = "fs-bash";
+    unsharePid = false;
+    targetPkgs = pkgs: [libnl openssl zlib];
 
-buildFHSEnv {
-  name = "fs-bash";
-  unsharePid = false;
-  targetPkgs = pkgs: [ libnl openssl zlib ];
+    extraInstallCommands = ''
+      ln -s ${falcon-sensor}/* $out/
+    '';
 
-  extraInstallCommands = ''
-    ln -s ${falcon-sensor}/* $out/
-  '';
-
-  runScript = "bash";
-}
-
+    runScript = "bash";
+  }

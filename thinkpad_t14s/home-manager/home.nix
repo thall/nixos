@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   # https://github.com/NixOS/nixpkgs/issues/196651
   manual.manpages.enable = false;
 
@@ -45,21 +46,24 @@
     pkgs.yq
     pkgs.yubico-pam # https://nixos.wiki/wiki/Yubikey#Logging-in
     # Broken upstream, fix merged, channel not yet updated.
-    # pkgs.yubikey-manager 
+    # pkgs.yubikey-manager
     pkgs.qgis
   ];
 
   # Fix broken hypnotix package
-  nixpkgs.overlays = [(
-    final: prev:
-    {
-      hypnotix = prev.hypnotix.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [
-          ./../../patches/hypnotix/fix_remove_crash.patch
-        ];
-      });
-    }
-  )];
+  nixpkgs.overlays = [
+    (
+      final: prev: {
+        hypnotix = prev.hypnotix.overrideAttrs (old: {
+          patches =
+            (old.patches or [])
+            ++ [
+              ./../../patches/hypnotix/fix_remove_crash.patch
+            ];
+        });
+      }
+    )
+  ];
 
   programs = {
     alacritty = {
@@ -89,14 +93,13 @@
           save_to_clipboard = true;
         };
 
-
         live_config_reload = true;
       };
     };
 
     bash = {
       enable = true;
-      historyIgnore = [ "ls" "cd" "exit" ];
+      historyIgnore = ["ls" "cd" "exit"];
       shellAliases = {
         gapit = "gcloud auth print-identity-token";
         g = "git";
@@ -168,7 +171,7 @@
     go = {
       enable = true;
       package = pkgs.go_1_21;
-      goPrivate = [ "github.com/einride" "go.einride.tech" ];
+      goPrivate = ["github.com/einride" "go.einride.tech"];
       goPath = "go";
       goBin = "go/bin";
     };
@@ -197,7 +200,7 @@
       terminal = "screen-256color";
       extraConfig = ''
         # Colors
-        set -g default-terminal "tmux-256color" 
+        set -g default-terminal "tmux-256color"
         set -ga terminal-overrides ",xterm-termite:Tc"
 
         bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -236,7 +239,7 @@
 
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
-  home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
+  home.sessionPath = ["~/go/bin" "~/.local/bin"];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

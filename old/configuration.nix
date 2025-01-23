@@ -1,14 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ];
+  ];
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -18,17 +19,16 @@
       enableAdobeFlash = true;
     };
 
-    packageOverrides = pkgs: with pkgs; {
-
-      mplayer = pkgs.mplayer.override {
-        vdpauSupport = true;
-        pulseSupport = true;
+    packageOverrides = pkgs:
+      with pkgs; {
+        mplayer = pkgs.mplayer.override {
+          vdpauSupport = true;
+          pulseSupport = true;
+        };
       };
-    };
   };
 
-
-  networking.wireless.enable = true;  # Enables wireless.
+  networking.wireless.enable = true; # Enables wireless.
   networking.firewall.enable = false;
   networking.extraHosts = ''
     127.0.0.1 nixos
@@ -89,8 +89,8 @@
   fonts = {
     enableFontDir = true;
     enableCoreFonts = true;
-    enableGhostscriptFonts = true;	
-    fonts = with pkgs; [	
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
       dejavu_fonts
       freefont_ttf
       inconsolata
@@ -98,13 +98,13 @@
     ];
   };
 
-  # Sound 
+  # Sound
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
     zeroconf.discovery.enable = true;
-#    package = pkgs.pulseaudioFull;
-#    tcp.enable = true;
+    #    package = pkgs.pulseaudioFull;
+    #    tcp.enable = true;
   };
 
   # Enable the X11 windowing system.
@@ -119,12 +119,17 @@
       enable = true;
       layout = "se";
       multitouch.enable = true;
-      resolutions = [ { x = 1600; y = 900; } ];
+      resolutions = [
+        {
+          x = 1600;
+          y = 900;
+        }
+      ];
 
       libinput = {
         enable = true;
         clickMethod = "clickfinger";
-        tapping = false; 
+        tapping = false;
       };
 
       windowManager = {
@@ -142,7 +147,7 @@
           xsetroot -cursor_name left_ptr
           xrdb -merge ~/.Xresources
           feh --bg-scale ~/nix-wallpaper-simple-blue.png &
-          '';
+        '';
       };
 
       desktopManager = {
@@ -165,19 +170,18 @@
                 hosts => "172.20.0.2:9200"
         }
       '';
-
     };
   };
 
   users.mutableUsers = false;
   users.extraUsers.thall = {
-    extraGroups = [ "wheel" "cdrom" "disk" "audio" "docker" ];
+    extraGroups = ["wheel" "cdrom" "disk" "audio" "docker"];
     isNormalUser = true;
     uid = 1000;
     passwordFile = "/etc/passwd.d/thall.passwd";
   };
   users.extraUsers.niclast = {
-    extraGroups = [ "wheel" "cdrom" "disk" "audio" "docker" "libvirt" ];
+    extraGroups = ["wheel" "cdrom" "disk" "audio" "docker" "libvirt"];
     isNormalUser = true;
     uid = 1001;
     passwordFile = "/etc/passwd.d/niclast.passwd";
@@ -192,16 +196,16 @@
       PS1='[\w]$ '
 
       export PROMPT_COMMAND="history -a"
-      '';
+    '';
     shellAliases = {
-      ls="ls --color=auto";
-      l="ls -alh";
-      ll="ls -alh";
-      diff="colordiff";
-      grep="grep -i --color=auto";
-      less="less -R";
-      livestreamer="livestreamer --player mplayer";
-      tmux="tmux -2";
+      ls = "ls --color=auto";
+      l = "ls -alh";
+      ll = "ls -alh";
+      diff = "colordiff";
+      grep = "grep -i --color=auto";
+      less = "less -R";
+      livestreamer = "livestreamer --player mplayer";
+      tmux = "tmux -2";
     };
   };
   programs.light.enable = true;
@@ -213,4 +217,3 @@
 
   system.stateVersion = "17.09";
 }
-
