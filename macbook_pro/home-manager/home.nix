@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = [
     pkgs.colordiff
     pkgs.htop
@@ -12,23 +13,26 @@
   ];
 
   # Fix broken hypnotix package
-  nixpkgs.overlays = [(
-    final: prev:
-    {
-      hypnotix = prev.hypnotix.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [
-          ./../../patches/hypnotix/fix_remove_crash.patch
-        ];
-      });
-    }
-  )];
+  nixpkgs.overlays = [
+    (
+      final: prev: {
+        hypnotix = prev.hypnotix.overrideAttrs (old: {
+          patches =
+            (old.patches or [])
+            ++ [
+              ./../../patches/hypnotix/fix_remove_crash.patch
+            ];
+        });
+      }
+    )
+  ];
 
   programs = {
     bash = {
       enable = true;
-      historyIgnore = [ "ls" "cd" "exit" ];
+      historyIgnore = ["ls" "cd" "exit"];
       # workaround to get the EDITOR env set. Assigning `sessionVariables` does not work.
-      initExtra = '' export EDITOR="vim"
+      initExtra = ''        export EDITOR="vim"
       '';
     };
 
@@ -50,7 +54,7 @@
       enable = true;
     };
 
-    vim = { 
+    vim = {
       enable = true;
     };
 

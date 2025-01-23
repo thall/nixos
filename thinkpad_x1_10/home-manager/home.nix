@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = [
     pkgs.binutils # readelf
     pkgs.colordiff
@@ -9,7 +11,8 @@
     pkgs.gcc # To enable CGO in Go
     pkgs.glxinfo
     pkgs.gnumake
-    (pkgs.google-cloud-sdk.withExtraComponents
+    (
+      pkgs.google-cloud-sdk.withExtraComponents
       (with pkgs.google-cloud-sdk.components; [
         gke-gcloud-auth-plugin
       ])
@@ -33,7 +36,6 @@
     pkgs.peek # tool for recording GIFs
     pkgs.pgadmin4-desktopmode # currently broken
     pkgs.python3
-    pkgs.qgis
     pkgs.ripgrep
     pkgs.signal-desktop
     pkgs.spotify
@@ -96,9 +98,9 @@
 
     bash = {
       enable = true;
-      historyIgnore = [ "ls" "cd" "exit" ];
+      historyIgnore = ["ls" "cd" "exit"];
       shellAliases = {
-        cat="bat";
+        cat = "bat";
         gal = "gcloud auth login --update-adc";
         gapit = "gcloud auth print-identity-token";
         g = "git";
@@ -170,7 +172,7 @@
     go = {
       enable = true;
       package = pkgs.go_1_22;
-      goPrivate = [ "github.com/einride" "go.einride.tech" ];
+      goPrivate = ["github.com/einride" "go.einride.tech"];
       goPath = "go";
       goBin = "go/bin";
     };
@@ -206,7 +208,7 @@
       terminal = "screen-256color";
       extraConfig = ''
         # Colors
-        set -g default-terminal "tmux-256color" 
+        set -g default-terminal "tmux-256color"
         set -ga terminal-overrides ",xterm-termite:Tc"
 
         bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -259,12 +261,13 @@
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
   };
+  nixpkgs.config.allowUnfree = true;
 
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
-  home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
+  home.sessionPath = ["~/go/bin" "~/.local/bin"];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "thall";
