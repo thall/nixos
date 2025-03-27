@@ -1,39 +1,29 @@
 { config, pkgs, ... }:
 
 {
-
-  # https://github.com/NixOS/nixpkgs/issues/196651
-  manual.manpages.enable = false;
-
   home.packages = [
     pkgs.binutils # readelf
     pkgs.colordiff
     pkgs.curl
-    pkgs.gcc # Needed to compile / run Go programs
-    pkgs.gnumake
-    pkgs.google-cloud-sdk
     pkgs.lsof
+    pkgs.kdePackages.kleopatra
     pkgs.htop
     pkgs.hypnotix
     pkgs.hwinfo
     pkgs.jetbrains.goland
     pkgs.jq
     pkgs.ledger-live-desktop
-    pkgs.maven # Apache maven
     pkgs.monero-cli
     pkgs.monero-gui
     pkgs.nixpkgs-fmt
-    pkgs.nodejs-18_x
-    pkgs.patchelf
-    pkgs.pavucontrol
     pkgs.pciutils
     pkgs.peek # tool for recording GIFs
     pkgs.python3
     pkgs.ripgrep
     pkgs.signal-desktop
     pkgs.spotify
-    pkgs.terraform
     pkgs.tree
+    pkgs.tor-browser
     pkgs.unzip
     pkgs.usbutils
     pkgs.vlc
@@ -41,31 +31,34 @@
     pkgs.wget
     pkgs.wl-clipboard
     pkgs.xclip
-    pkgs.yarn
     pkgs.yq
-    pkgs.yubico-pam # https://nixos.wiki/wiki/Yubikey#Logging-in
-    # Broken upstream, fix merged, channel not yet updated.
-    # pkgs.yubikey-manager 
-    pkgs.qgis
   ];
 
   # Fix broken hypnotix package
-  nixpkgs.overlays = [(
-    final: prev:
-    {
-      hypnotix = prev.hypnotix.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [
-          ./../../patches/hypnotix/fix_remove_crash.patch
-        ];
-      });
-    }
-  )];
+  # nixpkgs.overlays = [(
+  #   final: prev:
+  #   {
+  #     hypnotix = prev.hypnotix.overrideAttrs (old: {
+  #       patches = (old.patches or []) ++ [
+  #         ./attribute-missing-fix.patch
+  #       ];
+  #     });
+  #   }
+  # )];
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry-qt;
+  };
 
   programs = {
+    gpg.enable = true;
     alacritty = {
       enable = true;
       settings = {
-        shell.program = "${pkgs.tmux}/bin/tmux";
+        terminal = {
+          shell.program = "${pkgs.tmux}/bin/tmux";
+        };
         window = {
           padding = {
             x = 4;
@@ -89,8 +82,9 @@
           save_to_clipboard = true;
         };
 
-
-        live_config_reload = true;
+        general = {
+          live_config_reload = true;
+        };
       };
     };
 
@@ -98,7 +92,6 @@
       enable = true;
       historyIgnore = [ "ls" "cd" "exit" ];
       shellAliases = {
-        gapit = "gcloud auth print-identity-token";
         g = "git";
         gcaan = "git commit -a --amend --no-edit";
         gchma = "git checkout master && git fetch && git reset --hard origin/master";
@@ -118,8 +111,6 @@
         gpuh = "git push";
         hme = "home-manager edit";
         hms = "home-manager switch";
-        urldec = "python -c \"import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))\"";
-        urlenc = "python -c \"import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))\"";
         xcp = "xclip -selection c";
       };
       # workaround to get the EDITOR env set.
@@ -128,12 +119,6 @@
       initExtra = ''
         export EDITOR="vim"
         export LESSQUIET="true"
-        source <(bookctl completion bash)
-        source <(deliverctl completion bash)
-        source <(orchestratectl completion bash)
-        source <(ownctl completion bash)
-        source <(sagaiamctl completion bash)
-        source <(collector completion bash)
       '';
     };
 
@@ -165,24 +150,11 @@
       enable = true;
     };
 
-    go = {
-      enable = true;
-      package = pkgs.go_1_21;
-      goPrivate = [ "github.com/einride" "go.einride.tech" ];
-      goPath = "go";
-      goBin = "go/bin";
-    };
-
     readline = {
       enable = true;
       variables = {
         completion-ignore-case = "on";
       };
-    };
-
-    java = {
-      enable = true;
-      package = pkgs.openjdk17;
     };
 
     firefox = {
@@ -238,6 +210,11 @@
   # Add local bin directory to $PATH
   home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
 
+  # Allow unfree software
+  home.file.".config/nixpkgs/config.nix" = {
+    text = "{ allowUnfree = true; }";
+  };    
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -254,5 +231,5 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.11";
+  home.stateVersion = "24.05";
 }
