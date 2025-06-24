@@ -28,7 +28,7 @@
     pkgs.monero-cli
     pkgs.monero-gui
     pkgs.nixpkgs-fmt
-    pkgs.nodejs-18_x
+    pkgs.nodejs_22
     pkgs.pciutils
     pkgs.peek # tool for recording GIFs
     pkgs.pgadmin4-desktopmode # currently broken
