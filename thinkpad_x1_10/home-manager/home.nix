@@ -250,9 +250,10 @@
       enable = true;
       enableBashIntegration = true;
       settings = {
-        cursor-style = "bar";
+        cursor-style = "block";
         cursor-style-blink = false;
         shell-integration-features = "no-cursor";
+        unfocused-split-opacity = 1;
       };
     };
   };
