@@ -14,6 +14,7 @@
         gke-gcloud-auth-plugin
       ])
     )
+    pkgs.gemini-cli
     pkgs.google-chrome
     pkgs.htop
     pkgs.hwinfo
