@@ -132,10 +132,7 @@
       initExtra = ''
         export EDITOR="vim"
         export LESSQUIET="true"
-        source <(bookctl completion bash)
-        source <(deliverctl completion bash)
-        source <(orchestratectl completion bash)
-        source <(sagaiamctl completion bash)
+        source <(podgatewayctl completion bash)
       '';
     };
 
