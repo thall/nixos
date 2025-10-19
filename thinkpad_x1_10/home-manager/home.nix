@@ -166,10 +166,10 @@
 
     go = {
       enable = true;
-      package = pkgs.go_1_23;
-      goPrivate = ["github.com/einride" "github.com/einride-autonomous" "go.einride.tech"];
-      goPath = "go";
-      goBin = "go/bin";
+      package = pkgs.go_1_25;
+      env = {
+        GOPRIVATE = ["github.com/einride" "github.com/einride-autonomous" "go.einride.tech"];
+      };
     };
 
     readline = {
