@@ -25,5 +25,18 @@
         ./x1-10/home-manager/home.nix
       ];
     };
+
+    nixosConfigurations.t14s = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+            ./t14s/nixos/configuration.nix
+        ];
+    };
+    homeConfigurations."thall@t14s" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [
+        ./t14s/home-manager/home.nix
+      ];
+    };
   };
 }

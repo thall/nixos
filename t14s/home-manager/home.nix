@@ -210,11 +210,6 @@
   # Add local bin directory to $PATH
   home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
 
-  # Allow unfree software
-  home.file.".config/nixpkgs/config.nix" = {
-    text = "{ allowUnfree = true; }";
-  };    
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -222,6 +217,12 @@
   # paths it should manage.
   home.username = "thall";
   home.homeDirectory = "/home/thall";
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

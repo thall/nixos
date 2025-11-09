@@ -7,7 +7,6 @@
 {
   imports =
     [
-      <nixos-hardware/lenovo/thinkpad/t14s/amd/gen1>
       ./hardware-configuration.nix
     ];
 
@@ -27,6 +26,7 @@
   # networking.interfaces.enp2s0f0.useDHCP = true;
   # networking.interfaces.wlp3s0.useDHCP = true;
   networking.networkmanager.enable = true;
+  networking.hostName = "t14s";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -36,12 +36,15 @@
   };
 
   # Enable the Plasma 6 Desktop Environment.
-  services.xserver.enable = true;
-  services.desktopManager = {
-    plasma6.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland = {
+      enable = true;
+      compositor = "kwin";
+    };
   };
-  services.displayManager = {
-    sddm.enable = true;
+  services.desktopManager.plasma6 = {
+    enable = true;
   };
 
   # Enable fwupd 
