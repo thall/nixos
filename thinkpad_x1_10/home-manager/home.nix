@@ -7,7 +7,6 @@
     pkgs.curl
     pkgs.dig
     pkgs.gcc # To enable CGO in Go
-    pkgs.glxinfo
     pkgs.gnumake
     (pkgs.google-cloud-sdk.withExtraComponents
       (with pkgs.google-cloud-sdk.components; [
@@ -32,7 +31,6 @@
     pkgs.nodejs_22
     pkgs.pciutils
     pkgs.peek # tool for recording GIFs
-    pkgs.pgadmin4-desktopmode # currently broken
     pkgs.python3
     pkgs.ripgrep
     pkgs.signal-desktop
@@ -54,40 +52,8 @@
   ];
 
   programs = {
-    alacritty = {
+    claude-code = {
       enable = true;
-      settings = {
-        terminal = {
-          shell.program = "${pkgs.tmux}/bin/tmux";
-        };
-
-        window = {
-          padding = {
-            x = 4;
-            y = 0;
-          };
-          dynamic_padding = true;
-          decorations = "full";
-          startup_mode = "Maximized";
-          title = "terminal";
-          dynamic_title = true;
-        };
-
-        font = {
-          normal = {
-            family = "Hack";
-          };
-          size = 10.0;
-        };
-
-        selection = {
-          save_to_clipboard = true;
-        };
-
-        general = {
-          live_config_reload = true;
-        };
-      };
     };
 
     bat = {
@@ -133,17 +99,27 @@
         export EDITOR="vim"
         export LESSQUIET="true"
         source <(podgatewayctl completion bash)
+
+        # Expose variables needed for Claude Code and Gemeni.
+        export GOOGLE_CLOUD_PROJECT="e-gemini-cli-prod"
+        export GOOGLE_CLOUD_LOCATION="europe-west1"
+        export GOOGLE_GENAI_USE_VERTEXAI="true"
+        export CLAUDE_CODE_USE_VERTEX="1"
+        export CLOUD_ML_REGION="europe-west1"
+        export ANTHROPIC_VERTEX_PROJECT_ID="e-gemini-cli-prod"
       '';
     };
 
     git = {
       enable = true;
-      userName = "Niclas Thall";
-      userEmail = "niclas.thall@einride.tech";
-      aliases = {
-        st = "status";
-      };
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Niclas Thall";
+          email = "niclas.thall@einride.tech";
+        };
+        aliases = {
+          st = "status";
+        };
         pull = {
           rebase = "true";
         };
@@ -181,7 +157,6 @@
 
     java = {
       enable = true;
-      package = pkgs.openjdk17;
     };
 
     eza = {
@@ -263,7 +238,7 @@
 
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
-  home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
+  home.sessionPath = [ "/home/thall/go/bin" "/home/thall/.local/bin" ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "thall";
