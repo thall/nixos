@@ -19,7 +19,7 @@
             ./x1-10/nixos/configuration.nix
         ];
     };
-    homeConfigurations.thall = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations."thall@x1-10" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = [
         ./x1-10/home-manager/home.nix
