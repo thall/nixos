@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = [
     pkgs.binutils # readelf
     pkgs.colordiff
@@ -90,7 +92,7 @@
 
     bash = {
       enable = true;
-      historyIgnore = [ "ls" "cd" "exit" ];
+      historyIgnore = ["ls" "cd" "exit"];
       shellAliases = {
         g = "git";
         gcaan = "git commit -a --amend --no-edit";
@@ -169,7 +171,7 @@
       terminal = "screen-256color";
       extraConfig = ''
         # Colors
-        set -g default-terminal "tmux-256color" 
+        set -g default-terminal "tmux-256color"
         set -ga terminal-overrides ",xterm-termite:Tc"
 
         bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -208,7 +210,7 @@
 
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
-  home.sessionPath = [ "~/go/bin" "~/.local/bin" ];
+  home.sessionPath = ["~/go/bin" "~/.local/bin"];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -220,7 +222,7 @@
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
   };
   nixpkgs.config.allowUnfree = true;
 

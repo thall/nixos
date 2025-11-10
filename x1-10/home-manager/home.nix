@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = [
     pkgs.binutils # readelf
     pkgs.colordiff
@@ -8,7 +10,8 @@
     pkgs.dig
     pkgs.gcc # To enable CGO in Go
     pkgs.gnumake
-    (pkgs.google-cloud-sdk.withExtraComponents
+    (
+      pkgs.google-cloud-sdk.withExtraComponents
       (with pkgs.google-cloud-sdk.components; [
         gke-gcloud-auth-plugin
       ])
@@ -62,9 +65,9 @@
 
     bash = {
       enable = true;
-      historyIgnore = [ "ls" "cd" "exit" ];
+      historyIgnore = ["ls" "cd" "exit"];
       shellAliases = {
-        cat="bat";
+        cat = "bat";
         gal = "gcloud auth login --update-adc";
         gapit = "gcloud auth print-identity-token";
         g = "git";
@@ -178,7 +181,7 @@
       terminal = "screen-256color";
       extraConfig = ''
         # Colors
-        set -g default-terminal "tmux-256color" 
+        set -g default-terminal "tmux-256color"
         set -ga terminal-overrides ",xterm-termite:Tc"
 
         bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -232,13 +235,13 @@
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
   };
   nixpkgs.config.allowUnfree = true;
 
   # Add Go bin directory to $PATH
   # Add local bin directory to $PATH
-  home.sessionPath = [ "/home/thall/go/bin" "/home/thall/.local/bin" ];
+  home.sessionPath = ["/home/thall/go/bin" "/home/thall/.local/bin"];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "thall";

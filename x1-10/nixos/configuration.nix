@@ -1,16 +1,18 @@
 # Edit this configuration file to define what should be installed on
-
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./crowdstrike/module.nix
-    ];
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./crowdstrike/module.nix
+  ];
 
   # Enable crowdstrike
   custom.falcon.enable = true;
@@ -22,7 +24,7 @@
   networking.hostName = "x1-10"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -82,7 +84,7 @@
             "bluetooth.autoswitch-to-headset-profile" = false;
           };
           "monitor.bluez.properties" = {
-            "bluez5.roles" = [ "a2dp_sink" "a2dp_source" ];
+            "bluez5.roles" = ["a2dp_sink" "a2dp_source"];
           };
         };
       };
@@ -96,7 +98,7 @@
   users.users.thall = {
     createHome = true;
     isNormalUser = true;
-    extraGroups = [ "docker" "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["docker" "networkmanager" "wheel"]; # Enable ‘sudo’ for the user.
     hashedPassword = "$6$RG2hGR1grUT6Li$vDRayal/o2YW7HJ3yj0s8JjI/IgUGTJpGY8oo56IerVige8fBEvWv4VTJ3eV64WQ0cYoUSxzkZs0ijZ40J5sM1";
   };
 
@@ -111,7 +113,7 @@
     enable = true;
   };
   services.openvpn.servers = {
-    pagodenVPN = { config = '' config /home/thall/einride/niclas.thall.openvpn.conf ''; };
+    pagodenVPN = {config = ''config /home/thall/einride/niclas.thall.openvpn.conf '';};
   };
 
   virtualisation = {
@@ -173,6 +175,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
-

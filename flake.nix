@@ -8,16 +8,18 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, ... } @ inputs:
-  let
-    pkgs = import nixpkgs { system = "x86_64-linux"; };
-  in
-  {
+  outputs = {
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    pkgs = import nixpkgs {system = "x86_64-linux";};
+  in {
     nixosConfigurations.x1-10 = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-            ./x1-10/nixos/configuration.nix
-        ];
+      specialArgs = {inherit inputs;};
+      modules = [
+        ./x1-10/nixos/configuration.nix
+      ];
     };
     homeConfigurations."thall@x1-10" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -27,10 +29,10 @@
     };
 
     nixosConfigurations.t14s = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-            ./t14s/nixos/configuration.nix
-        ];
+      specialArgs = {inherit inputs;};
+      modules = [
+        ./t14s/nixos/configuration.nix
+      ];
     };
     homeConfigurations."thall@t14s" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -38,5 +40,7 @@
         ./t14s/home-manager/home.nix
       ];
     };
+
+    formatter.x86_64-linux = pkgs.alejandra;
   };
 }
